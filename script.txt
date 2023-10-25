@@ -1,0 +1,99 @@
+CREATE DATABASE IF NOT EXISTS `crudtp` ;
+USE `crudtp` ; 
+
+
+
+
+
+CREATE TABLE `consultation` (
+  `villeID` int(11) NOT NULL,
+  `foumisseurID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
+
+
+CREATE TABLE `foumisseur` (
+  `foumisseurID` int(11) NOT NULL,
+  `nbr_foumisseur` varchar(50) NOT NULL,
+  `nom` varchar(50) NOT NULL,
+  `adresse` varchar(10) NOT NULL,
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
+
+
+
+
+
+CREATE TABLE `ville` (
+  `villeID` int(11) NOT NULL,
+  `nom` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
+
+
+
+
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `login` varchar(20) NOT NULL,
+  `pass` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
+
+
+
+
+
+ALTER TABLE `consultation`
+  ADD KEY `villeID` (`villeID`),
+  ADD KEY `consultation_ibfk_2` (`foumisseurID`);
+
+
+ALTER TABLE `foumisseur`
+  ADD PRIMARY KEY (`foumisseurID`);
+
+
+ALTER TABLE `ville`
+  ADD PRIMARY KEY (`villeID`);
+
+
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
+
+
+
+ALTER TABLE `foumisseur`
+  MODIFY `foumisseurID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
+
+ALTER TABLE `ville`
+  MODIFY `villeID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+
+
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+
+ALTER TABLE `consultation`
+  ADD CONSTRAINT `consultation_ibfk_1` FOREIGN KEY (`villeID`) REFERENCES `specialite` (`villeID`),
+  ADD CONSTRAINT `consultation_ibfk_2` FOREIGN KEY (`foumisseurID`) REFERENCES `patient` (`foumisseurID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+
+INSERT INTO `ville` (`villeID`, `nom`) VALUES
+(1,'agadir'),
+(2,'morrakech'),
+(3,'fés'),
+
+
+INSERT INTO `user` (`id`, `login`, `pass`) VALUES
+(1,'admin', 'admin');
